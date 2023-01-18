@@ -1,0 +1,86 @@
+class Auto:
+
+#Автомобиль
+#имеет цвет
+#имеет мощность дивгателя
+#имеет максимальный запас бензина в баке
+#имеет расход (например 9.3 литра на 100 км)
+#можно перекрасить
+#можно заправить N литров
+#можно проехать N киллометров
+#можно узнать цвет
+#мощность
+#сколько осталось литров в баке
+#узнать расход
+    color: str = "green"
+    power: int = 100
+    maxbac: int = 80 #имеет максимальный запас бензина в баке
+    expense: float = 9.3 #имеет расход (например 9.3 литра на 100 км)
+    now_bac: int = 20
+    
+    def __init__(self, color: str = "red", power: int = 200, maxbac: int = 100, expense: float = 7, now_bac: int = 20):
+        self.color = color
+        self.power = power
+        self.maxbac = maxbac
+        self.expense = expense
+        self.now_bac = now_bac
+    
+    def set_color(self, color): 
+        self.color = color
+        return self.color
+    def get_color(self):
+        return self.color
+     
+    def get_fuel(self, maxbac):
+        return self.maxbac
+    
+    def set_fuel(self, maxbac):
+        self.maxbac = maxbac
+        return self.maxbac
+    
+    def get_now_bac(self, now_bac):
+        return self.now_bac
+        
+    def get_expense(self):
+        return self.expense
+        
+    def get_refuel(self):
+        return self.maxbac - self.now_bac
+    
+    def refuel(self, naxbac):
+        if self.maxbac >= self.now_bac:
+            if maxbac > a.get_refuel():
+                print("нельзя дозаправить")
+            else:
+                self.now_bac += maxbac
+                return self.now_bac
+        else:
+            print("дозаправить не нужно")
+        
+    def distante(self):
+        return self.now_bac / self.expense
+    
+    def get_power(self):
+        return self.power
+        
+a = Auto(color = "black", power = 250, maxbac = 90, expense = 9.3, now_bac = 30)
+a.set_color("black")
+a.set_fuel(80)
+print("машина покрашена в", a.get_color(), "цвет")
+print("бак вмещает литров", a.get_fuel(80))
+print("бак содержит", a.now_bac)
+print("можно залить", a.get_refuel())
+print("можно проехать", a.distante())
+print("мощность двигателя", a.get_power())
+print("расход двигателя", a.get_expense())
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
