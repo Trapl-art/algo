@@ -18,13 +18,14 @@ class Auto:
     expense: float = 9.3 #имеет расход (например 9.3 литра на 100 км)
     now_bac: int = 20
     
-    def __init__(self, color: str = "red", power: int = 200, maxbac: int = 100, expense: float = 7, now_bac: int = 20):
+    def __init__(self, color: str = "red", power: int = 200, maxbac: int = 100, expense: float = 7, now_bac: int = 20 , interval: float = 50 ):
         self.color = color
         self.power = power
         self.maxbac = maxbac
         self.expense = expense
         self.now_bac = now_bac
-    
+        self.interval = interval
+   
     def set_color(self, color): 
         self.color = color
         return self.color
@@ -63,17 +64,27 @@ class Auto:
     def get_power(self):
         return self.power
         
-a = Auto(color = "black", power = 250, maxbac = 90, expense = 9.3, now_bac = 30)
-a.set_color("black")
-a.set_fuel(80)
-print("машина покрашена в", a.get_color(), "цвет")
-print("бак вмещает литров", a.get_fuel(80))
-print("бак содержит", a.now_bac)
-print("можно залить", a.get_refuel())
-print("можно проехать", a.distante())
-print("мощность двигателя", a.get_power())
-print("расход двигателя", a.get_expense())
+    def get_remained(self, expense, interval):
+        return self.expense / 100 * self.interval
+        
+        
     
+    def print(self):
+        print(f"""
+        1.машина имеет цвет: {a.set_color("Yellow")}
+        2.машина покрашена в: {a.get_color()} цвет
+        3.бак вмещает литров {a.get_fuel(80)}
+        4.бак содержит {a.now_bac}
+        5.можно залить {a.get_refuel()}
+        6.можно проехать {a.distante()}
+        7.мощность двигателя{a.get_power()}
+        8.расход двигателя {a.get_expense()}
+        9. осталось в баке {a.get_remained(expense = 9.3, interval = 50)} литров
+        """)
+
+        
+a = Auto(color = "black", power = 250, maxbac = 70, expense = 9.3, now_bac = 70, interval = 50)
+a.print()
     
     
     
