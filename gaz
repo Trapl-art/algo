@@ -1,0 +1,95 @@
+from flask import Flask, request
+
+app = Flask(__name__)
+
+
+capacity = {'92': 0, '95': 0, '98': 0}
+
+prices = {'92': 50, '95': 50, '98': 50}
+
+revenue = 0
+
+
+@app.route('/refuel/', methods=['POST'])
+def refuel():
+    data = request.json
+    if 'volume' in data:
+        global revenue
+        type = request.json['type']
+        volume = request.json['volume']
+        if capacity[type] < volume:
+            return {'status': 'fail', 'text': 'not enough fuel'}
+        else:
+            capacity[type] -= volume
+            print(volume, prices[type])
+            price = volume * prices[type]
+            revenue += price
+            return {'status': 'ok'}
+    if 'money' in data:
+        type = request.json['type']
+        money = request.json['money']
+        volume = money / prices[type]
+        if capacity[type] < volume:
+            return {'status': 'fail', 'text': 'not enough fuel'}
+        else:
+            capacity[type] -= volume
+            revenue += volume * prices[type]
+            return {'status': 'ok'}
+
+
+@app.route('/fueltruck/', methods=['GET'])
+def get_fueltruck():
+    return {'status': 'ok', 'data': capacity}
+
+
+@app.route('/fueltruck/', methods=['POST'])
+def post_fueltruck():
+    new_fuel = request.json['data']
+    while new_fuel != {}:
+        fuel = new_fuel.popitem()
+        type = fuel[0]
+        volume = fuel[1]
+        capacity[type] += volume
+
+
+@app.route('/prices/', methods=['POST'])
+def post_prices():
+    new_prices = request.json['data']
+    while new_prices != {}:
+        new_price = new_prices.popitem()
+        type = new_price[0]
+        price = new_price[1]
+        prices[type] = price
+
+
+@app.route('/prices/', methods=['GET'])
+def get_prices():
+    return {'status': 'ok', 'data': prices}
+
+
+@app.route('/revenue/', methods=['GET'])
+def revenue():
+    return {'status': 'ok', 'revenue': revenue}
+
+
+@app.route('/default/', methods=['POST'])
+def default():
+    global capacity, prices, revenue
+    capacity = {'92': 0, '95': 0, '98': 0}
+
+    prices = {'92': 50, '95': 50, '98': 50}
+
+    revenue = 0
+    return {'status': 'ok'}
+
+
+
+
+
+
+
+
+
+
+
+app.run(host='0.0.0.0', port=5005)
